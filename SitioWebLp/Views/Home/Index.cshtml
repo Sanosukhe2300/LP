@@ -31,10 +31,10 @@
                             <span class="onsale">Sale!</span>
                         </a>
                         <span class="product-thumb-info">
-                            <a href="shop-cart.html" class="add-to-cart-product">
+                            <a href="#" class="add-to-cart-product" id="cartfun" name="cartfun" onclick="agregarCart(@item.id)">
                                 <span><i class="fas fa-shopping-cart"></i> Add to Cart</span>
                             </a>
-                            <a href="shop-product-sidebar.html"> 
+                            <a href="#">
                                 <span class="product-thumb-info-image">
                                     <span class="product-thumb-info-act">
                                         <span class="product-thumb-info-act-left"><em>View</em></span>
@@ -68,9 +68,66 @@
         <div class="col">
             <ul class="pagination float-right">
                 <li class="page-item"><a class="page-link" href="#">«</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>              
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
             </ul>
         </div>
     </div>
 
 </div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        //Lista de los productos seleccionados para el carrito
+        var listProducts = [];
+
+
+        $(document).ready(function(){
+
+
+        });
+
+        //Funcion para agregar producto a carrito, se hace llamada ajax(enviando la lista de productos)
+        //a un action del controller home para que devuelva el HTML del carrito cargado
+        function agregarCart(idproduct) {
+
+            //alert("PoructoId: " + idproduct);
+
+            //agregamos el idProducto a la lista
+            listProducts.push(idproduct);
+
+             //Borramos el carrito
+             $('#headerShop').empty();
+
+             //llamada Ajax
+             var request = $.ajax({
+                 url: '@Url.Action("CartMant", "Home")',
+                 type: "POST",
+                 data: JSON.stringify(listProducts),
+                 dataType: "html",
+                 contentType: "application/json; charset=utf-8"
+             });
+
+
+             request.done(function (response) {
+                 $('#headerShop').append(response);
+
+             });
+
+             request.fail(function (jqXHR, textStatus) {
+                 alert("Proceso no realizado: " + textStatus);
+             });
+
+
+        }
+
+
+
+
+
+    </script>
+    
+    
+    
+    
+    }

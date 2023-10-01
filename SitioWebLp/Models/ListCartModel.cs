@@ -5,12 +5,12 @@ using System.Web;
 
 namespace SitioWebLp.Models
 {
-    public class IndexViewModel
+    public class ListCartModel
     {
         public int id { get; set; }
+        public string foto { get; set; }
         public string nombre { get; set; }
-        public string foto1 { get; set; }
-        public string precio { get; set; }
-        public string precioAnterior { get; set; }
+        public int cant { get; set; }
+        public decimal precio { get; set; }
     }
 }
